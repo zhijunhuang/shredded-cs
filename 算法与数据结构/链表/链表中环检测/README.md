@@ -51,7 +51,7 @@
  */
 public class Solution {
   public boolean hasCycle(ListNode head) {
-  	return method2(head);
+    return method2(head);
   }
   
   //方法1:快慢指针，空间复杂度O(1),每次快指针移动两步，慢指针移动一步，如果两指针相等则有环
@@ -150,8 +150,8 @@ public class Solution {
  * }
  */
 public class Solution {
-	public ListNode detectCycle(ListNode head) {
-		return method1(head);
+  public ListNode detectCycle(ListNode head) {
+    return method1(head);
   }
   
   //集合法

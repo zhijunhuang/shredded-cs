@@ -40,7 +40,7 @@ ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, 以及 ans.next.next.next 
 class Solution {
   //还是用快慢指针，每次慢指针走一步，快指针走两步，快指针到尾部（next==null）时，慢指针指向中间节点
   //注意充分利用举例，判断好边界
-	public ListNode middleNode(ListNode head) {
+  public ListNode middleNode(ListNode head) {
     ListNode slowPointer = head;
     ListNode quickPointer = head;
     while (slowPointer != null && quickPointer != null) {
@@ -55,7 +55,7 @@ class Solution {
       slowPointer = slowPointer.next;
     }
     return slowPointer;
-	}
+  }
 }
 ```
 
@@ -111,8 +111,8 @@ class Solution {
  */
 class Solution {
   //边找中间节点，先把中间节点之前的链表反转，找到中间节点后再对比两个方向链表的值
-	public boolean isPalindrome(ListNode head) {
-		ListNode p1=head, p2=head, p1Pre = null, p1Next;
+  public boolean isPalindrome(ListNode head) {
+    ListNode p1=head, p2=head, p1Pre = null, p1Next;
     ListNode left=null, right=null;
     while (p1 != null && p2 != null) {
       if (p2.next == null) { //奇数节点，此时p1Pre为左链表，p1.next为右链表

@@ -26,7 +26,7 @@
  */
 class Solution {
   //练习删除操作的题
-	public ListNode deleteDuplicates(ListNode head) {
+  public ListNode deleteDuplicates(ListNode head) {
     ListNode cur = head;
     while (cur != null && cur.next != null) {
       if (cur.val == cur.next.val) { //删除next
@@ -36,7 +36,7 @@ class Solution {
       }
     }
     return head;
-	}
+  }
 }
 ```
 
@@ -69,8 +69,8 @@ class Solution {
  * }
  */
 class Solution {
-	public ListNode deleteDuplicates(ListNode head) {
-		ListNode sentinel = new ListNode(-1);
+  public ListNode deleteDuplicates(ListNode head) {
+    ListNode sentinel = new ListNode(-1);
     sentinel.next = head;
     ListNode cur = sentinel;
     while (cur.next != null && cur.next.next != null) {

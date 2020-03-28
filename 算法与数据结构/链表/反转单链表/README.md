@@ -21,53 +21,53 @@
  * }
  */
 class Solution {
-		//迭代版本
+    //迭代版本
     public ListNode reverseList1(ListNode head) {
-				ListNode pre=null, cur = head;
-				while(cur != null) {
-          	ListNode next = cur.next; //暂存next
-          	cur.next = pre; //当前节点的next指向pre
-          	pre = cur; //pre指到当前（最后一个）节点
-          	cur = next; //cur移到next
-				}
-				return pre;
+        ListNode pre=null, cur = head;
+        while(cur != null) {
+            ListNode next = cur.next; //暂存next
+            cur.next = pre; //当前节点的next指向pre
+            pre = cur; //pre指到当前（最后一个）节点
+            cur = next; //cur移到next
+        }
+        return pre;
     }
     
     //递归版本1，借助辅助函数和成员变量,这个比较容易想到
     ListNode newHead;
     public ListNode reverseList2(ListNode head) {
-    		if (head == null || head.next == null) {
-          	return head;
-      	}
-      	recursiveReverseList(head);
-      	
-      	return newHead;
+        if (head == null || head.next == null) {
+            return head;
+        }
+        recursiveReverseList(head);
+        
+        return newHead;
     }
     
     private ListNode recursiveReverseList(ListNode node) {
-      	if (node == null || node.next == null) {
-          	return node;
-      	}
-      	ListNode next = recursiveReverseList(node.next);
-      	if (newHead == null) {
-          	newHead = next;
-      	}
-      	//反转next和node
-      	next.next = node;
-      	node.next = null;
-      	return node;
+        if (node == null || node.next == null) {
+            return node;
+        }
+        ListNode next = recursiveReverseList(node.next);
+        if (newHead == null) {
+            newHead = next;
+        }
+        //反转next和node
+        next.next = node;
+        node.next = null;
+        return node;
     }
     
     //递归版本2，建设递归方法返回的是新的头指针
     //Nm->Nn<-Np, 因为Nm.next == Nn, 那就意味着反转操作Nn.next = Nm的操作等同于Nm.next.next = Nm
     public ListNode reverseList(ListNode node) {
-      	if (node == null || node.next == null) {
-          	return node;
-      	}
-      	ListNode head = reverseList(node.next);
-      	node.next.next = node;
-      	node.next = null;
-      	return head;
+        if (node == null || node.next == null) {
+            return node;
+        }
+        ListNode head = reverseList(node.next);
+        node.next.next = node;
+        node.next = null;
+        return head;
     }
 }
 ```
@@ -118,7 +118,7 @@ class Solution {
       if (mNode == null) {
         return head;
       }
-    	//开始反转
+      //开始反转
       ListNode pre = null;
       ListNode cur = mNode;
       ListNode next = null;

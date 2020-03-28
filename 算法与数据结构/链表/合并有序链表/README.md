@@ -21,7 +21,7 @@
  * }
  */
 class Solution {
-	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+  public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     ListNode head = new ListNode(-1); //哨兵，val无所谓
     ListNode cur = head;
     while (l1 != null && l2 != null) {
@@ -43,7 +43,7 @@ class Solution {
     }
     
     return head.next;
-	}
+  }
 }
 ````
 
@@ -78,7 +78,7 @@ class Solution {
  */
 class Solution {
   //移动指针不难，难的是两两比较，这里借助优先队列（堆），简化比较
-	public ListNode mergeKLists(ListNode[] lists) {
+  public ListNode mergeKLists(ListNode[] lists) {
     PriorityQueue<ListNode> queue = new PriorityQueue(new Comparator<ListNode>(){
       @Override
       public int compare(ListNode n1, ListNode n2) {

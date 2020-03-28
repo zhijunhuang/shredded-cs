@@ -86,11 +86,11 @@ k 是一个正整数，它的值小于或等于链表的长度。
  * }
  */
 class Solution {
-	public ListNode reverseKGroup(ListNode head, int k) {
+  public ListNode reverseKGroup(ListNode head, int k) {
     if (head == null || head.next == null || k <= 1) {
       return head; //没有必要反转
     }
-		ListNode dummy = new ListNode(-1);
+    ListNode dummy = new ListNode(-1);
     dummy.next = head;
     ListNode pre=dummy, next=null, cur=head; //pre为kGroup前序节点，next为kGroup后续节点
     while (cur != null) {
