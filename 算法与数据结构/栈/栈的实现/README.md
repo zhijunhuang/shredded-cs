@@ -120,3 +120,93 @@ public class LinkedStack<T> implements IStack<T> {
 
 
 
+## 单测
+
+顺序栈单测：
+
+```java
+class ArrayStackTest {
+
+    @Test
+    void push() {
+        ArrayStack<Integer> stack = new ArrayStack(1);
+        assertTrue(stack.push(1));
+        assertFalse(stack.push(2));
+        assertTrue(stack.peek().equals(1));
+    }
+
+    @Test
+    void pop() {
+        ArrayStack<Integer> stack = new ArrayStack(1);
+        assertTrue(stack.push(1));
+        Integer i = stack.pop();
+        Integer j = stack.pop();
+        assertTrue(i.equals(1));
+        assertTrue(j == null);
+    }
+
+    @Test
+    void peek() {
+        ArrayStack<Integer> stack = new ArrayStack(2);
+        stack.push(1);
+        assertTrue(stack.peek().equals(1));
+        stack.push(2);
+        assertTrue(stack.peek().equals(2));
+    }
+
+    @Test
+    void isEmpty() {
+        ArrayStack<Integer> stack = new ArrayStack(1);
+        assertTrue(stack.isEmpty());
+        stack.push(1);
+        assertFalse(stack.isEmpty());
+        stack.pop();
+        assertTrue(stack.isEmpty());
+    }
+}
+```
+
+链表栈单测：
+
+```java
+class LinkedStackTest {
+
+    @Test
+    void push() {
+        LinkedStack<Integer> stack = new LinkedStack();
+        assertTrue(stack.push(1));
+        assertTrue(stack.push(2));
+        assertTrue(stack.peek().equals(2));
+    }
+
+    @Test
+    void pop() {
+        LinkedStack<Integer> stack = new LinkedStack();
+        assertTrue(stack.push(1));
+        Integer i = stack.pop();
+        Integer j = stack.pop();
+        assertTrue(i.equals(1));
+        assertTrue(j == null);
+    }
+
+    @Test
+    void peek() {
+        LinkedStack<Integer> stack = new LinkedStack();
+        stack.push(1);
+        assertTrue(stack.peek().equals(1));
+        stack.push(2);
+        assertTrue(stack.peek().equals(2));
+    }
+
+    @Test
+    void isEmpty() {
+        LinkedStack<Integer> stack = new LinkedStack();
+        assertTrue(stack.isEmpty());
+        stack.push(1);
+        assertFalse(stack.isEmpty());
+        stack.pop();
+        assertTrue(stack.isEmpty());
+    }
+}
+```
+
