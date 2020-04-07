@@ -182,3 +182,121 @@ class Solution {
 ```
 
 相同的题还有 https://leetcode-cn.com/problems/smallest-k-lcci/
+
+基本上优先队列可以成为求解第k大或第k小问题的标准套路。除了直接分配长度k的队列，还可以通过k次poll得到第k大的数，再比如下面这道。
+
+## 面试题17.09.第k个数
+
+有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。
+
+示例 1:
+
+输入: k = 5
+
+输出: 9
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/get-kth-magic-number-lcci
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+这题虽然没有明确写明是求第K大的数，但是观察数列可以知道这是递增数列。这次我们采用最小堆，不停poll的方式，当第k次poll的时候就是要求的那个数。之所以要用这种方式，因为poll的结果要参与新数的运算。每次poll出的数都是当前最小因子，它跟{3,5,7}分别相乘就能得到满足题意的新数。
+
+注意每次新生成的数有可能之前就生成过，如3x5=5x3；另外每次生成的数都是等比递增，这会给人一个错觉，会以为去重后每次追加到普通队列后面即可，这是不对的。举个反例：
+
+比如当前poll的元素是7，它乘以素数后得到21,35,49，前两个重复；下个poll的元素是9，它乘以素数后得到27,45,63；可以看到如果是普通队列27是跟在49后面的，这样的队列每次poll的数就不是当前最小的，当然最后的求的k也是错误的。
+
+```java
+class Solution {
+    public int getKthMagicNumber(int k) {
+		int[] primes = {3,5,7};
+        //为了避免整型溢出，所以用long存储
+        PriorityQueue<Long> heap = new PriorityQueue();
+        HashSet<Long> set = new HashSet();
+        
+        heap.offer(1L);
+        long num = 1L;
+        for (int i=0; i<k; i++) {
+            num = heap.poll(); //每次log2k，因为每次新增3个数，减少1个数，一共k次，klog2k
+            long result;
+            for (int p : primes) { 
+                result = num * p; //执行3k次
+                if (!set.contains(result)) {
+                    heap.offer(result); //执行klog2k~3klog2k
+                    set.add(result);
+                }
+            }
+        }
+        return (int)num;
+    }
+}
+```
+
+时间复杂度：O(NlogN)。我们还会在动态规划看到这题。
+
+虽然优先队列是解第K大问题的标准套路，但正如440题看到的，这不一定是最优方案。再比如下面这题，也是如此。
+
+## 719.找出第k小的距离对
+
+给定一个整数数组，返回所有数对之间的第 k 个最小距离。一对 (A, B) 的距离被定义为 A 和 B 之间的绝对差值。
+
+示例 1:
+
+输入：
+nums = [1,3,1]
+k = 1
+输出：0 
+解释：
+所有数对如下：
+(1,3) -> 2
+(1,1) -> 0
+(3,1) -> 2
+因此第 1 个最小距离的数对是 (1,1)，它们之间的距离为 0。
+提示:
+
+2 <= len(nums) <= 10000.
+0 <= nums[i] < 1000000.
+1 <= k <= len(nums) * (len(nums) - 1) / 2.
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/find-k-th-smallest-pair-distance
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+这题我们先排下序，因为要计算两两之间的距离，这本身就是O(N²)的时间复杂度，排完序后，(i, i+1)的距离不可能大于(i, i+2)，所以我们先将(i, i+1)入最小堆，然后依次poll k次，每次poll后，将poll元素索引的距离增大1再插入队列，这样平均时间复杂度有望降低。但是最坏情况时间复杂度仍为O(N²logN)
+
+```java
+class Solution {
+    public int smallestDistancePair(int[] nums, int k) {
+        Arrays.sort(nums);
+		PriorityQueue<Node> heap = new PriorityQueue(new Comparator<Node>(){
+            @Override
+            public int compare(Node n1, Node n2) {
+                return n1.dist-n2.dist;
+            }
+        });
+        for (int i=0; i+1<nums.length; i++) {
+            heap.offer(new Node(i, i+1, nums[i+1]-nums[i]));
+        }
+        Node n = null;
+        for (; k > 0; k--) {
+            n = heap.poll();
+            if (n.j+1 < nums.length) {
+                heap.offer(new Node(n.i, n.j+1, nums[n.j+1]-nums[n.i]));
+            }
+        }
+        return n.dist;
+    }
+    
+    private static class Node {
+        int i;
+        int j;
+        int dist;
+        
+        public Node(int i, int j, int dist) {
+            this.i = i;
+            this.j = j;
+            this.dist = dist;
+        }
+    }
+}
+```
+
